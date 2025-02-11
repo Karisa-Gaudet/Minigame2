@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VerticalEnemyBehavior : MonoBehaviour
 {
-    public GameObject projectilePrefab;
+    public GameObject[] projectilePrefabs;
     public float speed = 5;
 
     public float yRange = 9;
@@ -47,13 +47,15 @@ public class VerticalEnemyBehavior : MonoBehaviour
 
     void RandomThing()
     {
-        float randomTime = Random.Range(3, 5);
-        SpawnProjectile();
+        float randomTime = Random.Range(1,3);
+        SpawnRandomProjectile();
         Invoke("RandomThing", randomTime);
     }
-    void SpawnProjectile()
+
+    void SpawnRandomProjectile()
     {
+        int projectileIndex = Random.Range(0, projectilePrefabs.Length);
         //Launch a projectile from the enemy
-        Instantiate(projectilePrefab, transform.position, transform.rotation);
+        Instantiate(projectilePrefabs[projectileIndex], transform.position, transform.rotation);
     }
 }

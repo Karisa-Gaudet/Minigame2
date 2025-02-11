@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject[] projectilePrefabs;
+
     public float horizontalInput;
     public float speed = 10.0f;
     public float xRange = 9;
@@ -11,16 +13,39 @@ public class PlayerController : MonoBehaviour
     public float verticalInput;
     public float yRange = 4.8f;
 
+    //Vector3 targetEulerAngles;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //targetEulerAngles = transform.localEulerAngles;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Get inputs
+        
+
+        Movement();
+
+        //if (horizontalInput > 0) targetEulerAngles.x = -90;
+        //if (horizontalInput < 0) targetEulerAngles.x = 90;
+        //if (verticalInput < 0) targetEulerAngles.x = 180;
+        //if (verticalInput > 0) targetEulerAngles.x = 0;
+
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SpawnRandomProjectile();
+        }
+
+        
+    }
+
+    void Movement()
+    {
+        //Get movement inputs
 
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
@@ -47,5 +72,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, yRange, transform.position.z);
         }
+    }
+
+    void SpawnRandomProjectile()
+    {
+        int projectileIndex = Random.Range(0, projectilePrefabs.Length);
+        //Launch a projectile
+        Instantiate(projectilePrefabs[projectileIndex], transform.position, transform.rotation);
     }
 }

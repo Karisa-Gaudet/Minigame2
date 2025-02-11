@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HorizontalEnemyBehavior : MonoBehaviour
 {
-    public GameObject projectilePrefab;
+    public GameObject[] projectilePrefabs;
     public float speed = 5;
    
     public float xRange = 13;
@@ -12,7 +12,6 @@ public class HorizontalEnemyBehavior : MonoBehaviour
 
     private float startDelay = 1;
     //private float spawnInterval = 1.5f;
-
     
 
     // Start is called before the first frame update
@@ -48,14 +47,15 @@ public class HorizontalEnemyBehavior : MonoBehaviour
 
     void RandomThing()
     {
-        float randomTime = Random.Range(3, 5);
-        SpawnProjectile();
+        float randomTime = Random.Range(1, 3);
+        SpawnRandomProjectile();
         Invoke("RandomThing",randomTime);
     }
 
-    void SpawnProjectile()
+    void SpawnRandomProjectile()
     {
+        int projectileIndex = Random.Range(0, projectilePrefabs.Length);
         //Launch a projectile from the enemy
-        Instantiate(projectilePrefab, transform.position, transform.rotation);
+        Instantiate(projectilePrefabs[projectileIndex], transform.position, transform.rotation);
     }
 }

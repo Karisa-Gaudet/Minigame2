@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject[] projectilePrefabs;
+    
+    public Transform playerSpawner;
 
     public float horizontalInput;
     public float speed = 10.0f;
@@ -18,29 +20,26 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //targetEulerAngles = transform.localEulerAngles;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        transform.forward = Vector3.up;
 
         Movement();
 
-        //if (horizontalInput > 0) targetEulerAngles.x = -90;
-        //if (horizontalInput < 0) targetEulerAngles.x = 90;
-        //if (verticalInput < 0) targetEulerAngles.x = 180;
-        //if (verticalInput > 0) targetEulerAngles.x = 0;
+        if (horizontalInput > 0) playerSpawner.forward = Vector3.left;
+        if (horizontalInput < 0) playerSpawner.forward = Vector3.right;
+        if (verticalInput < 0) playerSpawner.forward = Vector3.up;
+        if (verticalInput > 0) playerSpawner.forward = Vector3.down;
 
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnRandomProjectile();
-        }
 
         
+
+
+
     }
 
     void Movement()
@@ -72,12 +71,10 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, yRange, transform.position.z);
         }
+
+
+
     }
 
-    void SpawnRandomProjectile()
-    {
-        int projectileIndex = Random.Range(0, projectilePrefabs.Length);
-        //Launch a projectile
-        Instantiate(projectilePrefabs[projectileIndex], transform.position, transform.rotation);
-    }
+    
 }
